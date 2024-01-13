@@ -1,0 +1,10 @@
+return {
+	-- onedark主题
+	"navarasu/onedark.nvim",
+	config = function()
+		require("onedark").setup({
+			style = "cool",
+		})
+		require("onedark").load()
+	end,
+}
