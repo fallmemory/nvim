@@ -69,7 +69,8 @@ return {
 	require("plugins.formatter.conform"),
 	--------------------linter-----------------------
 	-- 代码检查工具
-	require("plugins.linter.lint"),
+	-- require("plugins.linter.lint"),
+	require("plugins.linter.none-ls"),
 	--------------------dap-----------------------
 	-- 调试工具
 	require("plugins.dap.dap"),

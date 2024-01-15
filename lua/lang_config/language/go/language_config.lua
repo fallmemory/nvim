@@ -1,16 +1,16 @@
--- NOTE:treesitter
+-- treesitter
 -- local treesitter = { "cpp" }
 local treesitter = { "go" }
 
--- NOTE:需要安装的lsp
+-- 需要安装的lsp
 -- local lspinstall = { "clangd" }
 local lspinstall = { "gopls" }
 
--- NOTE:需要启动的lspserver
+-- 需要启动的lspserver
 --local lspserver = { "clangd" }
 local lspserver = { "gopls" }
 
--- NOTE:lspconfig
+-- lspconfig
 -- local lspconfig={
 --       clangd={空也要写}
 -- }
@@ -33,28 +33,21 @@ local lspconfig = {
 		},
 	},
 }
-
---[[
-支持的lint
-https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file#available-linters
-]]
-
--- NOTE:lintinstall
--- local lintinstall = {"cpplint"}
--- local lintinstall = { "name in Mason" }
-local lintinstall = {}
-
--- NOTE:lint_by_ft
--- local lint_by_ft = { cpp = { "clangtidy" } }
--- local lint_by_ft = { type = { "linter name", "name2", "name3" } }
-local lint_by_ft = {}
-
--- NOTE:linters
--- local linters = { clangtidy = {} }
--- local linters = { linter_name1 = {}, linter_name2 = {}, linter_name3 = {} }
-local linters = {}
-
--- NOTE:formatterinstall
+-------------------------------------------------------------------------------------
+-- nonelsinstall
+-- local nonelsinstall = {"cpplint"}
+-- local nonelsinstall = { "name in Mason" }
+local nonelsinstall = {}
+local nullsetup = {
+	code_actions = {},
+	completion = {},
+	diagnostics = {},
+	formatting = {},
+	hover = {},
+	_test = {},
+}
+-------------------------------------------------------------------------------------
+-- formatterinstall
 -- local formatterinstall = { "isort", "black" }
 -- local formatterinstall = { "name in Mason" }
 local formatterinstall = {}
@@ -63,7 +56,7 @@ local formatterinstall = {}
 formatter_by_ft使用里的formater文件名
 https://github.com/stevearc/conform.nvim/tree/master/lua/conform/formatters
 ]]
--- NOTE:formatter_by_ft
+-- formatter_by_ft
 -- local formatter_by_ft = { cpp = { "clang_format" } }
 local formatter_by_ft = { go = { "gofmt", "goimports-reviser" } }
 
@@ -71,17 +64,17 @@ local formatter_by_ft = { go = { "gofmt", "goimports-reviser" } }
 dap安装名
 https://github.com/jay-babu/mason-nvim-dap.nvim/tree/main/lua/mason-nvim-dap/mappings/adapters
 ]]
--- NOTE:dapinstall
+-- dapinstall
 -- local dapinstall = { "cppdbg" }
 local dapinstall = { "delve" }
 
--- NOTE:dapconfig
+-- dapconfig
 
--- NOTE:compile
+-- compile
 -- local compile = { cpp = "<esc>:w<cr>:!clang++ % -g -o %:r.exe <cr>" }
 local compile = { go = "<esc>:w<cr>:!go build % <cr>" }
 
--- NOTE:coderun
+-- coderun
 -- local coderun = {
 -- 	cpp = '<esc>:w<cr><cmd>TermExec direction=float cmd="clang++ % -g -o %:r.exe ; %:r.exe" <cr>',
 -- }
@@ -99,12 +92,10 @@ M.GET = function(name)
 		return lspserver
 	elseif name == "lspconfig" then
 		return lspconfig
-	elseif name == "lintinstall" then
-		return lintinstall
-	elseif name == "lint_by_ft" then
-		return lint_by_ft
-	elseif name == "linters" then
-		return linters
+	elseif name == "nonelsinstall" then
+		return nonelsinstall
+	elseif name == "nullsetup" then
+		return nullsetup
 	elseif name == "formatterinstall" then
 		return formatterinstall
 	elseif name == "formatter_by_ft" then

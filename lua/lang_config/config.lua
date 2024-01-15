@@ -1,11 +1,12 @@
 local langlist = require("lang_config.enable_list")
 local M = {}
 -------------------------------------------------------------------------
--- 合并有设置键值的表
+-- 合并有设置键值且键值均不相同的表
 local extend_Tbl = function(tablename)
 	local list = {}
 	for _, langname in pairs(langlist) do
-		list = vim.tbl_extend(
+		-- list = vim.tbl_extend(
+		list = vim.tbl_deep_extend(
 			"force",
 			list,
 			require("lang_config.language." .. langname .. ".language_config").GET(tablename)
@@ -23,6 +24,26 @@ local extend_Ovalue = function(tablename)
 	return list
 end
 -------------------------------------------------------------------------
+local extend_Nullsetup = function()
+	local nullsetup = {
+		code_actions = {},
+		completion = {},
+		diagnostics = {},
+		formatting = {},
+		hover = {},
+		_test = {},
+	}
+	for nullsetup_key, value in pairs(nullsetup) do
+		for _, langname in pairs(langlist) do
+			value = vim.list_extend(
+				value,
+				require("lang_config.language." .. langname .. ".language_config").GET("nullsetup")[nullsetup_key]
+			)
+		end
+	end
+	return nullsetup
+end
+-------------------------------------------------------------------------
 -- 调用函数合并表
 local treesitter = vim.list_extend({
 	"luadoc",
@@ -35,15 +56,14 @@ local treesitter = vim.list_extend({
 local lspinstall = extend_Ovalue("lspinstall")
 local lspserver = extend_Ovalue("lspserver")
 local lspconfig = extend_Tbl("lspconfig")
-local lintinstall = extend_Ovalue("lintinstall")
-local lint_by_ft = extend_Tbl("lint_by_ft")
-local linters = extend_Tbl("linters")
+local nonelsinstall = extend_Ovalue("nonelsinstall")
+local nullsetup = extend_Nullsetup()
 local formatterinstall = extend_Ovalue("formatterinstall")
 local formatter_by_ft = extend_Tbl("formatter_by_ft")
 local dapinstall = extend_Ovalue("dapinstall")
 local compile = extend_Tbl("compile")
 local coderun = extend_Tbl("coderun")
-local formatter_lint_list = vim.list_extend(extend_Ovalue("formatterinstall"), lintinstall)
+local formatter_none_list = vim.list_extend(extend_Ovalue("formatterinstall"), nonelsinstall)
 ----------------------------------------------------------------------------
 M.get_config = function(name)
 	if name == "treesitter" then
@@ -54,12 +74,10 @@ M.get_config = function(name)
 		return lspserver
 	elseif name == "lspconfig" then
 		return lspconfig
-	elseif name == "lintinstall" then
-		return lintinstall
-	elseif name == "lint_by_ft" then
-		return lint_by_ft
-	elseif name == "linters" then
-		return linters
+	elseif name == "nonelsinstall" then
+		return nonelsinstall
+	elseif name == "nullsetup" then
+		return nullsetup
 	elseif name == "formatterinstall" then
 		return formatterinstall
 	elseif name == "formatter_by_ft" then
@@ -70,8 +88,8 @@ M.get_config = function(name)
 		return compile
 	elseif name == "coderun" then
 		return coderun
-	elseif name == "formatter_lint_list" then
-		return formatter_lint_list
+	elseif name == "formatter_none_list" then
+		return formatter_none_list
 	end
 end
 return M

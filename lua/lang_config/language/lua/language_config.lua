@@ -1,13 +1,13 @@
--- NOTE:treesitter
+-- treesitter
 local treesitter = { "lua" }
 
--- NOTE:需要安装的lsp
+-- 需要安装的lsp
 local lspinstall = { "lua_ls" }
 
 --NOTE:需要启动的lspserver
 local lspserver = { "lua_ls" }
 
--- NOTE:lspconfig
+-- lspconfig
 local lspconfig = {
 	lua_ls = {
 		cmd = {
@@ -32,31 +32,33 @@ local lspconfig = {
 		},
 	},
 }
-
--- NOTE:lintinstall
-local lintinstall = {}
-
--- NOTE:lint_by_ft
-local lint_by_ft = {}
-
--- NOTE:linters
-local linters = {}
-
--- NOTE:formatterinstall
+-------------------------------------------------------------------------------------
+-- nonelsinstall
+local nonelsinstall = {}
+local nullsetup = {
+	code_actions = {},
+	completion = {},
+	diagnostics = {},
+	formatting = {},
+	hover = {},
+	_test = {},
+}
+-------------------------------------------------------------------------------------
+-- formatterinstall
 local formatterinstall = { "stylua" }
 
--- NOTE:formatter_by_ft
+-- formatter_by_ft
 local formatter_by_ft = { lua = { "stylua" } }
 
--- NOTE:dapinstall
+-- dapinstall
 local dapinstall = {}
 
--- NOTE:dapconfig
+-- dapconfig
 
--- NOTE:compile
+-- compile
 local compile = { lua = "<Nop>" }
 
--- NOTE:coderun
+-- coderun
 local coderun = { lua = "<Nop>" }
 
 local M = {}
@@ -69,12 +71,10 @@ M.GET = function(name)
 		return lspserver
 	elseif name == "lspconfig" then
 		return lspconfig
-	elseif name == "lintinstall" then
-		return lintinstall
-	elseif name == "lint_by_ft" then
-		return lint_by_ft
-	elseif name == "linters" then
-		return linters
+	elseif name == "nonelsinstall" then
+		return nonelsinstall
+	elseif name == "nullsetup" then
+		return nullsetup
 	elseif name == "formatterinstall" then
 		return formatterinstall
 	elseif name == "formatter_by_ft" then

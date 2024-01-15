@@ -1,13 +1,13 @@
--- NOTE:treesitter
+-- treesitter
 local treesitter = { "cpp" }
 
--- NOTE:需要安装的lsp
+-- 需要安装的lsp
 local lspinstall = {}
 
 --NOTE:需要启动的lspserver
 local lspserver = { "clangd" }
 
--- NOTE:lspconfig
+-- lspconfig
 -- lspconfig={
 -- local xxxx={空也要写}
 -- }
@@ -19,31 +19,33 @@ local lspconfig = {
 		},
 	},
 }
-
--- NOTE:lintinstall
-local lintinstall = {}
-
--- NOTE:lint_by_ft
-local lint_by_ft = { cpp = { "clangtidy" } }
-
--- NOTE:linters
-local linters = { clangtidy = {} }
-
--- NOTE:formatterinstall
+-------------------------------------------------------------------------------------
+-- nonelsinstall
+local nonelsinstall = { "cpplint" }
+local nullsetup = {
+	code_actions = {},
+	completion = {},
+	diagnostics = {"cpplint"},
+	formatting = {},
+	hover = {},
+	_test = {},
+}
+-------------------------------------------------------------------------------------
+-- formatterinstall
 local formatterinstall = { "clang-format" }
 
--- NOTE:formatter_by_ft
+-- formatter_by_ft
 local formatter_by_ft = { cpp = { "clang_format" } }
 
--- NOTE:dapinstall
+-- dapinstall
 local dapinstall = { "cppdbg" }
 
--- NOTE:dapconfig
+-- dapconfig
 
--- NOTE:compile
+-- compile
 local compile = { cpp = "<esc>:w<cr>:!clang++ % -g -o %:r.exe <cr>" }
 
--- NOTE:coderun
+-- coderun
 local coderun = {
 	cpp = '<esc>:w<cr><cmd>TermExec direction=float cmd="clang++ % -g -o %:r.exe && %:r.exe" <cr>',
 }
@@ -58,12 +60,10 @@ M.GET = function(name)
 		return lspserver
 	elseif name == "lspconfig" then
 		return lspconfig
-	elseif name == "lintinstall" then
-		return lintinstall
-	elseif name == "lint_by_ft" then
-		return lint_by_ft
-	elseif name == "linters" then
-		return linters
+	elseif name == "nonelsinstall" then
+		return nonelsinstall
+	elseif name == "nullsetup" then
+		return nullsetup
 	elseif name == "formatterinstall" then
 		return formatterinstall
 	elseif name == "formatter_by_ft" then
