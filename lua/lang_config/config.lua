@@ -14,6 +14,25 @@ local extend_Tbl = function(tablename)
 	end
 	return list
 end
+-- print(vim.inspect(require("lang_config.config").GET("lspconfig)))
+-- 列表去重函数
+local delete_Equal_Element = function(tablename)
+	if next(tablename) ~= nil then
+		local temp = {}
+		local re_table = {}
+		-- 利用键不可相同把相同的元素覆盖掉
+		for _, v in pairs(tablename) do
+			temp[v] = true
+		end
+		-- 把键转回值
+		for k, _ in pairs(temp) do
+			table.insert(re_table, k)
+		end
+		return re_table
+	else
+		return tablename
+	end
+end
 
 -- 合并只有值的表
 local extend_Ovalue = function(tablename)
@@ -21,6 +40,7 @@ local extend_Ovalue = function(tablename)
 	for _, langname in pairs(langlist) do
 		list = vim.list_extend(list, require("lang_config.language." .. langname .. ".language_config").GET(tablename))
 	end
+	list = delete_Equal_Element(list)
 	return list
 end
 -------------------------------------------------------------------------
@@ -40,6 +60,7 @@ local extend_Nullsetup = function()
 				require("lang_config.language." .. langname .. ".language_config").GET("nullsetup")[nullsetup_key]
 			)
 		end
+		nullsetup[nullsetup_key] = delete_Equal_Element(value)
 	end
 	return nullsetup
 end
