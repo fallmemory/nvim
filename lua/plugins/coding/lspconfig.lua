@@ -35,9 +35,9 @@ return {
 			ensure_installed = ensure_installed,
 		})
 		for servername, serverconfig in pairs(lspconfig) do
-			if servername == "lua_ls" then
-				require("neodev").setup()
-			end
+			 if servername == "lua_ls" then
+			 	require("neodev").setup()
+			 end
 			require("lspconfig")[servername].setup(vim.tbl_deep_extend("force", defaultconfig, serverconfig))
 		end
 	end,

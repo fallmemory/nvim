@@ -14,7 +14,7 @@ local extend_Tbl = function(tablename)
 	end
 	return list
 end
--- print(vim.inspect(require("lang_config.config").GET("lspconfig)))
+
 -- 列表去重函数
 local delete_Equal_Element = function(tablename)
 	if next(tablename) ~= nil then

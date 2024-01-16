@@ -10,6 +10,10 @@ return {
 	config = function()
 		require("noice").setup({
 			lsp = {
+				progress = {
+					-- 关闭右下角lsp信息
+					enabled = false,
+				},
 				override = {
 					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
 					["vim.lsp.util.stylize_markdown"] = true,

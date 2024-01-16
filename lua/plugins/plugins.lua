@@ -1,6 +1,6 @@
 return {
 	-- 主题
-	require("config.colorscheme.onedark"),
+	require("config.colorscheme.catppuccin"),
 	--------------------UI-----------------------
 	-- 启动界面
 	require("plugins.ui.alpha"),
@@ -37,6 +37,8 @@ return {
 	require("plugins.utils.notify"),
 	-- 命令行窗口
 	require("plugins.utils.noice"),
+	-- LSP进度信息
+	require("plugins.utils.fidget"),
 	-- 高亮相同内容
 	require("plugins.utils.illuminate"),
 	-- 搜索替换
